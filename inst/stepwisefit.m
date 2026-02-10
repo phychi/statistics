@@ -13,9 +13,10 @@
 ## ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 ## FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
 ## details.
-
+##
 ## You should have received a copy of the GNU General Public License along with
 ## this program; if not, see <http://www.gnu.org/licenses/>.
+
 ## -*- texinfo -*-
 ## @deftypefn  {statistics} {} stepwisefit (@var{X}, @var{y})
 ## @deftypefnx {statistics} {@var{b} =} stepwisefit (@var{X}, @var{y})
