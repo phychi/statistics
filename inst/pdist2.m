@@ -103,7 +103,7 @@
 ## returns the matrix @var{I}, which contains the indices of the observations in
 ## @var{X} corresponding to the distances in @var{D}.  You must specify either
 ## @qcode{"Smallest"} or @qcode{"Largest"} as an optional @var{Name}-@var{Value}
-## pair pair argument to compute the second output argument.
+## pair argument to compute the second output argument.
 ##
 ## @seealso{pdist, knnsearch, rangesearch}
 ## @end deftypefn
@@ -175,12 +175,17 @@ function [D, I] = pdist2 (X, Y, varargin)
   endwhile
 
   ## Check additional arguments
+  if (parcount > 0)
+    if (fix (K) != K || K < 1)
+      error ("pdist2: K must be a positive integer value.");
+    endif
+  endif
   if (parcount > 1)
-    error ("pdist2: you can only use either Smallest or Largest.");
+    error ("pdist2: you can only specify either 'Smallest' or 'Largest'.");
   endif
   if (isempty (SortOrder) && nargout > 1)
-    error (strcat ("pdist2: Smallest or Largest must be specified", ...
-                   " to compute second output."));
+    error (strcat ("pdist2: 'Smallest' or 'Largest' must be", ...
+                   " specified to compute second output."));
   endif
 
   ## FAST PATH: Optimization for fast Euclidean algorithm
@@ -624,9 +629,11 @@ endfunction
 %! pdist2 (ones (3), ones (3), "minkowski", 3, "Largest")
 %!error<pdist2: invalid NAME in optional pairs of arguments.> ...
 %! pdist2 (ones (3), ones (3), "minkowski", 3, "large", 4)
-%!error<pdist2: you can only use either Smallest or Largest.> ...
+%!error<pdist2: K must be a positive integer value.> ...
+%! pdist2 (ones (3), ones (3), "minkowski", 3, "largest", 4.5)
+%!error<pdist2: you can only specify either 'Smallest' or 'Largest'.> ...
 %! pdist2 (ones (3), ones (3), "minkowski", 3, "Largest", 4, "smallest", 5)
-%!error<pdist2: Smallest or Largest must be specified to compute second output.> ...
+%!error<pdist2: 'Smallest' or 'Largest' must be specified to compute second output.> ...
 %! [d, i] = pdist2(ones (3), ones (3), "minkowski", 3)
 %!error<pdist2: DistParameter for standardized euclidean must be a vector of> ...
 %! pdist2 (ones (3), ones (3), "seuclidean", 3)
