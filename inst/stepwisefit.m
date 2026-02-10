@@ -13,7 +13,7 @@
 ## ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 ## FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
 ## details.
-##
+
 ## You should have received a copy of the GNU General Public License along with
 ## this program; if not, see <http://www.gnu.org/licenses/>.
 ## -*- texinfo -*-
@@ -121,7 +121,6 @@
 ## @seealso{regress}
 ## @end deftypefn
 
-
 function [b, se, pval, finalmodel, stats, nextstep, history] = ...
          stepwisefit (X, y, varargin)
 
@@ -168,7 +167,7 @@ endif
   [InModel, Display, PEnter, PRemove, Scale, MaxIter, Keep, args] = ...
     pairedArgs (optNames, dfValues, varargin(:));
 
-  ## Semantic validation for Name-Value options 
+  ## Semantic validation for Name-Value options
 
   ## Validate Display
   if (! any (strcmpi (Display, {"on", "off"})))
@@ -376,7 +375,7 @@ endif
   ## Final regression on selected predictors
   Xfinal = [ones(n,1), Xc(:, X_use)];
   ## regstats intentionally unused; retained for MATLAB parity
-  [B, BINT, R, RINT, regstats] = regress (yc, Xfinal); 
+  [B, BINT, R, RINT, regstats] = regress (yc, Xfinal);
 
   Rresid = R(:);   ## freeze residual vector
 
@@ -434,7 +433,7 @@ endif
   stats.TSTAT = b ./ se;
   stats.PVAL  = pval;
   stats.TSTAT (!isfinite (stats.TSTAT)) = NaN;
-  
+
   excluded = setdiff (1:p, X_use);
 xr = zeros (n, numel (excluded));
 
@@ -454,7 +453,7 @@ else
 endif
 
 stats.xr = xr;
-  
+
   covb = NaN (p+1, p+1);
   covB = (stats.rmse^2) * pinv (Xfinal' * Xfinal);
 
@@ -462,7 +461,7 @@ stats.xr = xr;
   covb(idx, idx) = covB;
 
   stats.covb = covb;
-  
+
   if (stats.df0 > 0)
     stats.fstat = ((stats.SStotal - stats.SSresid) / stats.df0) ...
                   / (stats.SSresid / stats.dfe);
@@ -482,7 +481,7 @@ stats.xr = xr;
   Bhist = zeros (p, 1);
   Bhist(finalmodel) = b(finalmodel);
   history.B = Bhist;
- 
+
   ## Placeholders for future phases
   nextstep = 0;
 
